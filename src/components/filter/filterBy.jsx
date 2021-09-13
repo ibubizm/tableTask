@@ -1,28 +1,23 @@
 import { useEffect, useRef, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { setCurrentState } from '../redux/actions/actions'
+import { useSelector } from "react-redux"
 import './filter.scss'
 
-export const FilterByState = () => {
-    const { states, currentState } = useSelector(({ ItemReducer }) => ItemReducer)
+export const FilterByState = ({ filterState }) => {
+    const { states } = useSelector(({ ItemReducer }) => ItemReducer)
+    const [currentState, setCurrentState] = useState('all')
     const [visible, setVisible] = useState(false)
     const sortRef = useRef()
-
-    const dispatch = useDispatch()
 
     const handleOutsideClick = (e) => {
         if (!e.path.includes(sortRef.current)) {
             setVisible(false)
         }
-        else {
-            console.log('no')
-        }
     }
 
-    const dispatchActiveState = (state) => {
-        dispatch(setCurrentState(state))
+    const activeState = (state) => {
+        filterState(state)
+        setCurrentState(state)
     }
-
 
     useEffect(() => {
         document.body.addEventListener('click', handleOutsideClick)
@@ -39,7 +34,7 @@ export const FilterByState = () => {
                 <div className="sort__list">
                     <ul>
                         <li
-                            onClick={() => dispatchActiveState('all')}
+                            onClick={() => activeState('all')}
                             className={currentState === 'all' ?
                                 'active' : ''}
                         >
@@ -48,7 +43,7 @@ export const FilterByState = () => {
                         {states && states.map((state, index) =>
 
                             <li
-                                onClick={() => dispatchActiveState(state)}
+                                onClick={() => activeState(state)}
                                 className={currentState === state ?
                                     'active' : ''}
                                 key={`${state}`}>

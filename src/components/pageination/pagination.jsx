@@ -1,24 +1,39 @@
 import './pagination.scss'
-import { useState } from 'react'
 
-export const Pagination = () => {
-    const count = 120
-    const limit = 20
-    const pageCount = Math.ceil(count / limit)
+export const Pagination = ({ itemsPerPage, totalItems, setCurrentPage, currentPage }) => {
     const pages = []
 
-    const [activePage, setActivePage] = useState(1)
+    const active = (p) => {
+        setCurrentPage(p)
+    }
 
-    for (let i = 0; i < pageCount; i++) {
-        pages.push(i + 1)
+    const perv = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1)
+        }
+    }
+
+    const next = () => {
+        if (currentPage < pages.length) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
+
+
+    for (let i = 1; i < Math.ceil(totalItems / itemsPerPage); i++) {
+        pages.push(i)
     }
     return (
         <div className="pagination">
-            <ul>
-                {pages.map(p =>
-                    <li key={p} onClick={() => setActivePage(p)} className={activePage === p ? 'active' : ''}>{p}</li>
-                )}
-            </ul>
+            {pages.length > 1 &&
+                <ul>
+                    <li className="prev__next" onClick={() => perv()} >previous</li>
+                    {pages.map(p =>
+                        <li key={p} onClick={() => active(p)} className={currentPage === p ? 'page__num active' : 'page__num'}>{p}</li>
+                    )}
+                    <li className="prev__next" onClick={() => next()}>next</li>
+                </ul>
+            }
 
         </div>
     )
