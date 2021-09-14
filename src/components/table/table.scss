@@ -2,4 +2,22 @@
 .box{
     border: 1px solid black;
     margin: 0 auto;
+    padding: 5px;
 }
+
+.column_name{
+    cursor: pointer;
+}
+
+.ascending::after {
+    content: '👇';
+    display: inline-block;
+    margin-left: 1em;
+  }
+  
+.descending::after {
+    content: '☝️';
+    display: inline-block;
+    margin-left: 1em;
+  }
+
