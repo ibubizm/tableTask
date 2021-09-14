@@ -20,19 +20,18 @@ export const Table = ({ currentItems }) => {
         if (!sortConfig) {
             return;
         }
-        return sortConfig.key === name ? sortConfig.direction : undefined;
+        return sortConfig.key === name ? `${sortConfig.direction} column_name` : 'column_name';
     };
-    // style={{ border: '2px solid black',  }}
     return (
         <table border="1" style={{ borderCollapse: 'collapse', margin: '0 auto' }}>
             <thead>
                 <tr>
-                    <th className="column_name" className={getClassNamesFor('id')} onClick={() => requestSort('id')}>id</th>
-                    <th className="column_name" className={getClassNamesFor('firstName')} onClick={() => requestSort('firstName')}>First name</th>
-                    <th className="column_name" className={getClassNamesFor('lastName')} onClick={() => requestSort('lastName')}>last name</th>
-                    <th className="column_name" className={getClassNamesFor('email')} onClick={() => requestSort('email')}>Email</th>
-                    <th className="column_name" className={getClassNamesFor('phone')} onClick={() => requestSort('phone')}>Phone</th>
-                    <th className="column_name" className={getClassNamesFor('state')} onClick={() => requestSort('state')}>State</th>
+                    <th className={getClassNamesFor('id')} onClick={() => requestSort('id')}>id</th>
+                    <th className={getClassNamesFor('firstName')} onClick={() => requestSort('firstName')}>First name</th>
+                    <th className={getClassNamesFor('lastName')} onClick={() => requestSort('lastName')}>last name</th>
+                    <th className={getClassNamesFor('email')} onClick={() => requestSort('email')}>Email</th>
+                    <th className={getClassNamesFor('phone')} onClick={() => requestSort('phone')}>Phone</th>
+                    <th className={getClassNamesFor('state')} onClick={() => requestSort('state')}>State</th>
                 </tr>
 
             </thead>
