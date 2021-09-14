@@ -12,6 +12,9 @@ export const FilterByState = ({ filterState }) => {
         if (!e.path.includes(sortRef.current)) {
             setVisible(false)
         }
+        else {
+            console.log('')
+        }
     }
 
     const activeState = (state) => {
