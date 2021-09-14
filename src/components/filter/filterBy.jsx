@@ -9,11 +9,13 @@ export const FilterByState = ({ filterState }) => {
     const sortRef = useRef()
 
     const handleOutsideClick = (e) => {
-        if (!e.path.includes(sortRef.current)) {
-            setVisible(false)
+        try {
+            if (!e.path.includes(sortRef.current)) {
+                setVisible(false)
+            }
         }
-        else {
-            console.log('')
+        catch (error) {
+            console.log(error)
         }
     }
 
