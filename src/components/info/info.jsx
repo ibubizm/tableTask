@@ -12,7 +12,7 @@ export const Info = () => {
 
     return (
         <div className="body">
-            {!Object.keys(item).length === 0 ?
+            {!Object.keys(item).length == 0 ?
                 <div className="content">
                     <ul className="list">
                         <li className="list__item">Profile info:</li>

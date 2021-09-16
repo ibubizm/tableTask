@@ -35,9 +35,10 @@ const columnTitle = [
 export const Table = ({ currentItems, setListObj }) => {
     const dispatch = useDispatch()
     const [active, setActive] = useState({})
-    const { allItems } = useSelector(({ ItemReducer }) => ItemReducer)
+    const { allItems, currentState } = useSelector(({ ItemReducer }) => ItemReducer)
 
     const { items, requestSort, sortConfig } = useSortableData(allItems);
+
     const info = (obj) => {
         dispatch(setCurrentItem(obj))
         setActive({
