@@ -19,9 +19,8 @@ export const Pagination = ({ itemsPerPage, totalItems, setCurrentPage, currentPa
         }
     }
 
-
-    for (let i = 1; i < Math.ceil(totalItems / itemsPerPage); i++) {
-        pages.push(i)
+    for (let i = 0; i < Math.ceil(totalItems / itemsPerPage); i++) {
+        pages.push(i + 1)
     }
     return (
         <div className="pagination">

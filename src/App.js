@@ -44,7 +44,7 @@ function App() {
       const lower = search.toLowerCase()
       const biggest = lower[0].toUpperCase() + lower.slice(1)
 
-      const newObj = allItems.filter(i => i.firstName == biggest)
+      const newObj = allItems.filter(i => i.firstName === biggest)
       setListObj(newObj)
     }
   }
@@ -55,24 +55,29 @@ function App() {
       setCurrentPage(1)
     }
     else {
-      const newObj = allItems.filter(i => i.adress.state == currentState)
+      const newObj = allItems.filter(i => i.adress.state === currentState)
       setListObj(newObj)
       setCurrentPage(1)
     }
   }
 
+
+
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
   const currentItems = listObj.slice(indexOfFirstItem, indexOfLastItem)
-
   return (
     <div className="App">
-      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} itemsPerPage={itemsPerPage} totalItems={listObj.length} />
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={listObj.length} />
       <div className="filter-bar">
         <Search searchByName={searchByName} />
         <FilterByState filterState={filterState} />
       </div>
-      <Table currentItems={currentItems} />
+      <Table currentItems={currentItems} setListObj={setListObj} />
       <Info />
     </div>
   );

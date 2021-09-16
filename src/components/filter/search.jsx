@@ -7,7 +7,8 @@ export const Search = ({ searchByName }) => {
     return (
         <div>
             <input value={value} onChange={(e) => setValue(e.target.value)} type="text" placeholder="search by first name" />
-            <button onClick={() => searchByName(value)}>Search</button>
+            <button className="btn clear" onClick={() => setValue('')}>clear</button>
+            <button className="btn search" onClick={() => searchByName(value)}>Search</button>
         </div>
     )
 }

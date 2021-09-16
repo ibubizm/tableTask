@@ -1,19 +1,49 @@
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentItem } from '../../redux/actions/actions'
 import './table.scss'
 import { useSortableData } from '../filter/sorting'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export const Table = ({ currentItems }) => {
+const columnTitle = [
+    {
+        name: 'id',
+        title: 'ID'
+    },
+    {
+        name: 'firstName',
+        title: 'First name'
+    },
+    {
+        name: 'lastName',
+        title: 'Last name'
+    },
+    {
+        name: 'email',
+        title: 'Email'
+    },
+    {
+        name: 'phone',
+        title: 'Phone'
+    },
+    {
+        name: 'state',
+        title: 'State'
+    }
+]
+
+export const Table = ({ currentItems, setListObj }) => {
     const dispatch = useDispatch()
-    const [active, setActive] = useState('')
+    const [active, setActive] = useState({})
+    const { allItems } = useSelector(({ ItemReducer }) => ItemReducer)
 
-    const { items, requestSort, sortConfig } = useSortableData(currentItems);
-
+    const { items, requestSort, sortConfig } = useSortableData(allItems);
     const info = (obj) => {
         dispatch(setCurrentItem(obj))
-        setActive(obj.id)
+        setActive({
+            id: obj.id,
+            firstName: obj.firstName
+        })
     }
 
     const getClassNamesFor = (name) => {
@@ -22,22 +52,29 @@ export const Table = ({ currentItems }) => {
         }
         return sortConfig.key === name ? `${sortConfig.direction} column_name` : 'column_name';
     };
+
+    const sort = (i) => {
+        requestSort(i.name)
+
+    }
+
+    useEffect(() => {
+        setListObj(items)
+    }, [items])
+
     return (
         <table border="1" style={{ borderCollapse: 'collapse', margin: '0 auto' }}>
             <thead>
                 <tr>
-                    <th className={getClassNamesFor('id')} onClick={() => requestSort('id')}>id</th>
-                    <th className={getClassNamesFor('firstName')} onClick={() => requestSort('firstName')}>First name</th>
-                    <th className={getClassNamesFor('lastName')} onClick={() => requestSort('lastName')}>last name</th>
-                    <th className={getClassNamesFor('email')} onClick={() => requestSort('email')}>Email</th>
-                    <th className={getClassNamesFor('phone')} onClick={() => requestSort('phone')}>Phone</th>
-                    <th className={getClassNamesFor('state')} onClick={() => requestSort('state')}>State</th>
+                    {columnTitle.map(i =>
+                        <th key={`${i.name}_${i.title}`} className={getClassNamesFor(i.name)} onClick={() => sort(i)}>{i.title}</th>
+                    )}
                 </tr>
 
             </thead>
             <tbody>
-                {items.map(i =>
-                    <tr className={active === i.id ? 'active' : ''} onClick={() => info(i)} key={`${i.id}_${i.firstName}`}>
+                {currentItems.map(i =>
+                    <tr className={active.id === i.id && active.firstName === i.firstName ? 'active' : ''} onClick={() => info(i)} key={`${i.id}_${i.firstName}`}>
                         <th className="box">{i.id}</th>
                         <th className="box">{i.firstName}</th>
                         <th className="box">{i.lastName}</th>
