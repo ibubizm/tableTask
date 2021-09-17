@@ -77,7 +77,7 @@ function App() {
         <Search searchByName={searchByName} />
         <FilterByState filterState={filterState} />
       </div>
-      <Table currentItems={currentItems} setListObj={setListObj} />
+      <Table currentItems={currentItems} setListObj={setListObj} listObj={listObj} />
       <Info />
     </div>
   );

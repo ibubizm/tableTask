@@ -8,7 +8,7 @@ export function setCurrentItem(obj) {
 
 }
 
-export function setCurrentState(state) {
+export function dispatchCurrentState(state) {
     return {
         type: 'CURRENT_STATE',
         payload: state

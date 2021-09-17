@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react"
+import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
+import { dispatchCurrentState } from "../../redux/actions/actions"
 import './filter.scss'
 
 export const FilterByState = ({ filterState }) => {
+    const dispatch = useDispatch()
     const { states } = useSelector(({ ItemReducer }) => ItemReducer)
     const [currentState, setCurrentState] = useState('all')
     const [visible, setVisible] = useState(false)
@@ -22,6 +25,7 @@ export const FilterByState = ({ filterState }) => {
     const activeState = (state) => {
         filterState(state)
         setCurrentState(state)
+        dispatch(dispatchCurrentState(state))
     }
 
     useEffect(() => {

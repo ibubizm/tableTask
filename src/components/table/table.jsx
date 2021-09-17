@@ -4,40 +4,15 @@ import { setCurrentItem } from '../../redux/actions/actions'
 import './table.scss'
 import { useSortableData } from '../filter/sorting'
 import { useEffect, useState } from 'react'
+import { columnTitles } from './columns'
 
-const columnTitle = [
-    {
-        name: 'id',
-        title: 'ID'
-    },
-    {
-        name: 'firstName',
-        title: 'First name'
-    },
-    {
-        name: 'lastName',
-        title: 'Last name'
-    },
-    {
-        name: 'email',
-        title: 'Email'
-    },
-    {
-        name: 'phone',
-        title: 'Phone'
-    },
-    {
-        name: 'state',
-        title: 'State'
-    }
-]
 
-export const Table = ({ currentItems, setListObj }) => {
+export const Table = ({ currentItems, setListObj, listObj }) => {
     const dispatch = useDispatch()
     const [active, setActive] = useState({})
     const { allItems, currentState } = useSelector(({ ItemReducer }) => ItemReducer)
 
-    const { items, requestSort, sortConfig } = useSortableData(allItems);
+    const { items, requestSort, sortConfig } = useSortableData(currentState == 'all' ? allItems : listObj)
 
     const info = (obj) => {
         dispatch(setCurrentItem(obj))
@@ -56,18 +31,19 @@ export const Table = ({ currentItems, setListObj }) => {
 
     const sort = (i) => {
         requestSort(i.name)
-
+        // setListObj(items)
     }
+
 
     useEffect(() => {
         setListObj(items)
-    }, [items])
+    }, [sortConfig])
 
     return (
         <table border="1" style={{ borderCollapse: 'collapse', margin: '0 auto' }}>
             <thead>
                 <tr>
-                    {columnTitle.map(i =>
+                    {columnTitles.map(i =>
                         <th key={`${i.name}_${i.title}`} className={getClassNamesFor(i.name)} onClick={() => sort(i)}>{i.title}</th>
                     )}
                 </tr>
@@ -75,7 +51,7 @@ export const Table = ({ currentItems, setListObj }) => {
             </thead>
             <tbody>
                 {currentItems.map(i =>
-                    <tr className={active.id === i.id && active.firstName === i.firstName ? 'active' : ''} onClick={() => info(i)} key={`${i.id}_${i.firstName}`}>
+                    <tr style={{ cursor: 'pointer' }} className={active.id === i.id && active.firstName === i.firstName ? 'active' : ''} onClick={() => info(i)} key={`${i.id}_${i.firstName}`}>
                         <th className="box">{i.id}</th>
                         <th className="box">{i.firstName}</th>
                         <th className="box">{i.lastName}</th>
