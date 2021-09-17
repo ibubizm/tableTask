@@ -40,6 +40,7 @@ function App() {
   }, [])
 
   const searchByName = (search) => {
+    setCurrentState('all')
     if (search === '') {
       setListObj(allItems)
     }
