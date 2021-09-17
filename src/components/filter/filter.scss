@@ -45,10 +45,11 @@
 
 .btn{
     border: none;
-    padding: 10px 5px;
+    padding: 10px 15px;
     color: #fff;
-    margin: 3px;
+    margin: 1px;
     border-radius: 7px;
+    cursor: pointer;
 }
 
 .clear{
@@ -57,4 +58,8 @@
 
 .search{
     background-color: rgb(19, 132, 224);
+}
+
+.full{
+    background-color: rgb(109, 230, 39);
 }

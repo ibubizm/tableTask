@@ -14,6 +14,10 @@ function App() {
   const [listObj, setListObj] = useState([])
   const { allItems } = useSelector(({ ItemReducer }) => ItemReducer)
 
+  const [searchValue, setSearchValue] = useState('')
+
+  const [currentState, setCurrentState] = useState('all')
+
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(20)
   const dispatch = useDispatch()
@@ -31,7 +35,6 @@ function App() {
           const arr = Array.from(set)
           dispatch(setAllStates(arr))
         })
-
     }
     fetchList()
   }, [])
@@ -49,16 +52,16 @@ function App() {
     }
   }
 
+  const reset = () => {
+    setListObj(allItems)
+    setSearchValue('')
+    setCurrentState('all')
+  }
+
   const filterState = (currentState) => {
-    if (currentState === 'all') {
-      setListObj(allItems)
-      setCurrentPage(1)
-    }
-    else {
-      const newObj = allItems.filter(i => i.adress.state === currentState)
-      setListObj(newObj)
-      setCurrentPage(1)
-    }
+    const newObj = allItems.filter(i => i.adress.state === currentState)
+    setListObj(newObj)
+    setCurrentPage(1)
   }
 
 
@@ -68,15 +71,22 @@ function App() {
   const currentItems = listObj.slice(indexOfFirstItem, indexOfLastItem)
   return (
     <div className="App">
+      <div className="filter-bar">
+        <Search
+          searchByName={searchByName}
+          reset={reset}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue} />
+        <FilterByState
+          currentState={currentState}
+          setCurrentState={setCurrentState}
+          filterState={filterState} />
+      </div>
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         itemsPerPage={itemsPerPage}
         totalItems={listObj.length} />
-      <div className="filter-bar">
-        <Search searchByName={searchByName} />
-        <FilterByState filterState={filterState} />
-      </div>
       <Table currentItems={currentItems} setListObj={setListObj} listObj={listObj} />
       <Info />
     </div>

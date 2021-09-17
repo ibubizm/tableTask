@@ -31,7 +31,6 @@ export const Table = ({ currentItems, setListObj, listObj }) => {
 
     const sort = (i) => {
         requestSort(i.name)
-        // setListObj(items)
     }
 
 

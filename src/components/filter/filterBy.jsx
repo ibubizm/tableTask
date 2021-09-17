@@ -4,10 +4,9 @@ import { useSelector } from "react-redux"
 import { dispatchCurrentState } from "../../redux/actions/actions"
 import './filter.scss'
 
-export const FilterByState = ({ filterState }) => {
+export const FilterByState = ({ filterState, currentState, setCurrentState }) => {
     const dispatch = useDispatch()
     const { states } = useSelector(({ ItemReducer }) => ItemReducer)
-    const [currentState, setCurrentState] = useState('all')
     const [visible, setVisible] = useState(false)
     const sortRef = useRef()
 

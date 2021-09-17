@@ -3,10 +3,12 @@
     border: 1px solid black;
     margin: 0 auto;
     padding: 5px;
+    font-weight: 500;
 }
 
 .column_name{
     cursor: pointer;
+    padding: 5px 10px;
 }
 
 .ascending::after {
